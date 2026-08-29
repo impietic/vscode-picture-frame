@@ -1,21 +1,59 @@
 {
   "name": "vscode-picture-panel",
   "displayName": "vscode-picture-panel",
-  "description": "",
-  "version": "0.0.1",
+  "description": "Displays a picture in a movable side panel view.",
+  "author": {
+  "name": "Anthony Lazara <impietic>",
+  "email": "me@a5y.rocks"
+  },
+  "license": "CC0-1.0",
+  "version": "1.0.0",
   "engines": {
-    "vscode": "^1.134.0"
+    "vscode": "^1.50.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": ["onView:vscode-picture-panel.pictureView"],
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "vscode-picture-panel.helloWorld",
-      "title": "Hello World"
-    }]
+    "commands": [
+      {
+        "command": "vscode-picture-panel.selectPicture",
+        "title": "Select Picture...",
+        "icon": "$(device-camera)",
+        "category": "Picture Frame"
+      },
+      {
+        "command": "vscode-picture-panel.clearPicture",
+        "title": "Clear Picture",
+        "icon": "$(close)",
+        "category": "Picture Frame"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "vscode-picture-panel.pictureView",
+          "name": "Picture Frame",
+          "type": "webview"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "vscode-picture-panel.selectPicture",
+          "when": "view == vscode-picture-panel.pictureView",
+          "group": "navigation"
+        },
+        {
+          "command": "vscode-picture-panel.clearPicture",
+          "when": "view == vscode-picture-panel.pictureView",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "lint": "eslint .",
@@ -23,12 +61,13 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.134.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "24.x",
-    "eslint": "^10.5.0",
+    "@types/vscode": "^1.50.0",
     "@vscode/test-cli": "^0.0.15",
-    "@vscode/test-electron": "^3.0.0"
+    "@vscode/test-electron": "^3.0.0",
+    "eslint": "^10.5.0",
+    "globals": "^17.11.0"
   },
   "overrides": {
     "diff": "^8.0.4",
